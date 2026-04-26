@@ -226,8 +226,8 @@
     }
 
     .preview-card {
-      margin-bottom: 16px;
-      padding: 14px;
+      margin-bottom: 12px;
+      padding: 12px;
       border-radius: var(--radius-md);
       background: rgba(3, 7, 22, .34);
       border: 1px solid rgba(255,255,255,.1);
@@ -236,17 +236,18 @@
     .preview {
       display: block;
       width: 100%;
-      height: 112px;
+      height: auto;
+      aspect-ratio: 3 / 2;
       border-radius: 16px;
       background: radial-gradient(circle at center, rgba(255,255,255,.08), rgba(255,255,255,.025));
     }
 
     .help {
       display: grid;
-      gap: 8px;
-      margin-top: 16px;
+      gap: 6px;
+      margin-top: 10px;
       color: rgba(247,249,255,.82);
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.45;
     }
 
@@ -259,6 +260,54 @@
       border-radius: 14px;
       background: rgba(255,255,255,.055);
     }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 10px;
+    }
+    .mini-title {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .settings-group-title {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .settings-inline-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .settings-control {
+      min-height: 32px !important;
+      min-width: 92px;
+      padding: 0 10px !important;
+      font-size: 12px;
+      border-radius: 12px;
+    }
+    #volumeSlider.settings-control {
+      min-height: auto !important;
+      width: 96px;
+      padding: 0 !important;
+    }
+    .about-details summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      list-style: none;
+    }
+    .about-details summary::-webkit-details-marker { display: none; }
+    .about-details[open] summary { margin-bottom: 8px; }
 
     .keys { white-space: nowrap; }
 
@@ -591,56 +640,60 @@
 
       <aside class="panel right-panel">
         <div class="preview-card">
-          <h2 class="side-title">Следующая</h2>
-          <canvas id="next" class="preview" width="180" height="120"></canvas>
+          <h2 class="side-title">Фигуры</h2>
+          <div class="preview-grid">
+            <div>
+              <div class="mini-title">Следующая</div>
+              <canvas id="next" class="preview" width="180" height="120"></canvas>
+            </div>
+            <div>
+              <div class="mini-title">Hold</div>
+              <canvas id="hold" class="preview" width="180" height="120"></canvas>
+            </div>
+          </div>
         </div>
 
-        <div class="preview-card">
-          <h2 class="side-title">Hold</h2>
-          <canvas id="hold" class="preview" width="180" height="120"></canvas>
-        </div>
-
-        <div class="help">
-          <div class="help-row"><span>Движение</span><span class="keys"><kbd>←</kbd><kbd>→</kbd></span></div>
-          <div class="help-row"><span>Мягкое падение</span><span class="keys"><kbd>↓</kbd></span></div>
-          <div class="help-row"><span>Поворот</span><span class="keys"><kbd>↑</kbd><kbd>X</kbd><kbd>Z</kbd></span></div>
-          <div class="help-row"><span>Мгновенный сброс</span><span class="keys"><kbd>Space</kbd></span></div>
-          <div class="help-row"><span>Hold</span><span class="keys"><kbd>C</kbd></span></div>
-          <div class="help-row"><span>Пауза / рестарт</span><span class="keys"><kbd>P</kbd><kbd>R</kbd></span></div>
-        </div>
         <div class="preview-card">
           <h2 class="side-title">Настройки</h2>
           <div class="help">
+            <div class="settings-group-title">Визуал</div>
             <div class="help-row">
               <span>Тема</span>
-              <button class="btn btn-secondary" id="themeBtn" style="min-height:34px;padding:0 10px;">Dark</button>
+              <button class="btn btn-secondary settings-control" id="themeBtn">Dark</button>
             </div>
+            <div class="settings-group-title">Аудио</div>
             <div class="help-row">
               <span>Звук</span>
-              <button class="btn btn-secondary" id="muteBtn" style="min-height:34px;padding:0 10px;">On</button>
+              <button class="btn btn-secondary settings-control" id="muteBtn">On</button>
             </div>
             <div class="help-row">
               <span>Музыка</span>
-              <button class="btn btn-secondary" id="musicBtn" style="min-height:34px;padding:0 10px;">On</button>
+              <button class="btn btn-secondary settings-control" id="musicBtn">On</button>
+            </div>
+            <div class="help-row">
+              <span>Тема музыки</span>
+              <button class="btn btn-secondary settings-control" id="musicThemeBtn">Chill</button>
             </div>
             <div class="help-row">
               <span>Громкость</span>
-              <input id="volumeSlider" type="range" min="0" max="100" value="35" style="width:96px;">
+              <input id="volumeSlider" class="settings-control" type="range" min="0" max="100" value="35">
             </div>
-            <div class="help-row"><span>Back-to-back</span><span id="b2bLabel">0</span></div>
-            <div class="help-row"><span>Combo</span><span id="comboLabel">0</span></div>
+            <div class="settings-inline-stats">
+              <div class="help-row"><span>B2B</span><span id="b2bLabel">0</span></div>
+              <div class="help-row"><span>Combo</span><span id="comboLabel">0</span></div>
+            </div>
           </div>
         </div>
         <div class="preview-card">
           <h2 class="side-title">Клавиши</h2>
           <div class="help" id="keymapList"></div>
-        </div>
-        <div class="preview-card">
-          <h2 class="side-title">О проекте</h2>
-          <div class="tests" style="font-size:12px;color:rgba(247,249,255,.7);line-height:1.5;">
-            Canvas-based тетрис с 7-bag, hold, ghost piece, режимами и адаптивным UI.
-            Сделано на чистом HTML/CSS/JS без фреймворков.
-          </div>
+          <details class="about-details" style="margin-top:8px;">
+            <summary>О проекте</summary>
+            <div class="tests" style="margin-top:0;font-size:12px;color:rgba(247,249,255,.7);line-height:1.5;">
+              Canvas-based тетрис с 7-bag, hold, ghost piece, режимами и адаптивным UI.
+              Сделано на чистом HTML/CSS/JS без фреймворков.
+            </div>
+          </details>
         </div>
       </aside>
     </section>
@@ -663,7 +716,7 @@
         <div class="button-row" style="margin-top:14px;">
           <button class="btn btn-secondary" id="modeClassicBtn">Classic</button>
           <button class="btn btn-secondary" id="modeSprintBtn">Sprint 40</button>
-          <button class="btn btn-secondary" id="modeUltraBtn">Ultra 2m</button>
+          <button class="btn btn-secondary" id="modeUltraBtn">Ultra 5m</button>
           <button class="btn btn-secondary" id="modeZenBtn">Zen</button>
         </div>
         <div class="tests" id="seedInfo">Seed: auto</div>
@@ -709,10 +762,10 @@
     const STORAGE_KEY = 'neon_tetris_settings_v2';
     const BESTS_KEY = 'neon_tetris_bests_v2';
     const MODES = {
-      classic: { id: 'classic', title: 'Classic', targetLines: 0, timeLimitMs: 0, zen: false, baseInterval: 900, step: 70, minInterval: 90 },
-      sprint: { id: 'sprint', title: 'Sprint 40', targetLines: 40, timeLimitMs: 0, zen: false, baseInterval: 760, step: 85, minInterval: 70 },
-      ultra: { id: 'ultra', title: 'Ultra 2m', targetLines: 0, timeLimitMs: 120000, zen: false, baseInterval: 680, step: 95, minInterval: 60 },
-      zen: { id: 'zen', title: 'Zen', targetLines: 0, timeLimitMs: 0, zen: true, baseInterval: 980, step: 0, minInterval: 980 },
+      classic: { id: 'classic', title: 'Classic', targetLines: 0, timeLimitMs: 0, zen: false, baseInterval: 950, step: 70, minInterval: 120 },
+      sprint: { id: 'sprint', title: 'Sprint 40', targetLines: 40, timeLimitMs: 0, zen: false, baseInterval: 650, step: 95, minInterval: 80 },
+      ultra: { id: 'ultra', title: 'Ultra 5m', targetLines: 0, timeLimitMs: 300000, zen: false, baseInterval: 500, step: 110, minInterval: 65 },
+      zen: { id: 'zen', title: 'Zen', targetLines: 0, timeLimitMs: 0, zen: true, baseInterval: 1050, step: 0, minInterval: 1050 },
     };
     const DEFAULT_KEYMAP = {
       left: 'ArrowLeft',
@@ -801,6 +854,7 @@
       modalRestartBtn: document.getElementById('modalRestartBtn'),
       muteBtn: document.getElementById('muteBtn'),
       musicBtn: document.getElementById('musicBtn'),
+      musicThemeBtn: document.getElementById('musicThemeBtn'),
       themeBtn: document.getElementById('themeBtn'),
       volumeSlider: document.getElementById('volumeSlider'),
       keymapList: document.getElementById('keymapList'),
@@ -843,28 +897,35 @@
     let settings = loadJson(STORAGE_KEY, {
       muted: false,
       musicEnabled: true,
+      musicTheme: 'chill',
       volume: 0.35,
       theme: 'dark',
       keymap: DEFAULT_KEYMAP,
     });
     settings.keymap = { ...DEFAULT_KEYMAP, ...(settings.keymap || {}) };
     if (typeof settings.musicEnabled !== 'boolean') settings.musicEnabled = true;
+    if (!['chill', 'arcade', 'dark'].includes(settings.musicTheme)) settings.musicTheme = 'chill';
 
     window.restartGame = () => resetGame();
 
-    applyTheme(settings.theme);
-    ui.volumeSlider.value = Math.round(settings.volume * 100);
-    updateSoundUI();
-    updateModeButtons();
-    updateSeedLabel();
-    renderKeymap();
-    try {
-      runTests();
-    } catch (error) {
-      console.error(error);
-      if (ui.tests) ui.tests.textContent = 'Тесты: ошибка (игра запущена)';
-    }
-    resetGame({ showStart: true });
+    const safeCall = (fn) => {
+      try { fn(); } catch (error) { console.error(error); }
+    };
+    safeCall(() => applyTheme(settings.theme));
+    safeCall(() => { if (ui.volumeSlider) ui.volumeSlider.value = Math.round(settings.volume * 100); });
+    safeCall(updateSoundUI);
+    safeCall(updateModeButtons);
+    safeCall(updateSeedLabel);
+    safeCall(renderKeymap);
+    safeCall(() => {
+      try {
+        runTests();
+      } catch (error) {
+        console.error(error);
+        if (ui.tests) ui.tests.textContent = 'Тесты: ошибка (игра запущена)';
+      }
+    });
+    safeCall(() => resetGame({ showStart: true }));
     requestAnimationFrame(update);
 
     function createBoard() {
@@ -950,6 +1011,25 @@
       playTone('start');
       draw();
     }
+    function safeStartGame() {
+      try {
+        if (!board || !Array.isArray(board) || board.length !== ROWS) board = createBoard();
+        if (!current) current = createPiece();
+        if (!next) next = createPiece();
+        startGame();
+      } catch (error) {
+        console.error(error);
+        // Fallback start path to avoid dead button if some optional feature fails.
+        started = true;
+        paused = false;
+        gameOver = false;
+        hideStartModal();
+        hideStateModal();
+        lastTime = performance.now();
+        draw();
+      }
+    }
+    window.startGame = safeStartGame;
     function collide(targetBoard, piece) {
       for (let y = 0; y < piece.matrix.length; y++) {
         for (let x = 0; x < piece.matrix[y].length; x++) {
@@ -1353,6 +1433,7 @@
     function showStartModal() { ui.startModal.classList.add('show'); }
     function hideStartModal() { ui.startModal.classList.remove('show'); }
     function bindControls() {
+      const on = (el, event, handler) => { if (el) el.addEventListener(event, handler); };
       document.addEventListener('keydown', event => {
         if (waitingKeyAction) {
           settings.keymap[waitingKeyAction] = event.code;
@@ -1382,37 +1463,46 @@
         else if (event.code === map.restart) resetGame();
         else if (event.code === map.start && !started) startGame();
       });
-      ui.startBtn.addEventListener('click', startGame);
-      ui.startDemoBtn.addEventListener('click', () => resetGame());
-      ui.resumeBtn.addEventListener('click', togglePause);
-      ui.pauseBtn.addEventListener('click', togglePause);
-      ui.restartBtn.addEventListener('click', () => resetGame());
-      ui.modalRestartBtn.addEventListener('click', () => resetGame());
-      ui.modeClassicBtn.addEventListener('click', () => setMode('classic'));
-      ui.modeSprintBtn.addEventListener('click', () => setMode('sprint'));
-      ui.modeUltraBtn.addEventListener('click', () => setMode('ultra'));
-      ui.modeZenBtn.addEventListener('click', () => setMode('zen'));
-      ui.newSeedBtn.addEventListener('click', () => { currentSeed = randomSeed(); updateSeedLabel(); resetGame({ showStart: true }); });
-      ui.copySeedBtn.addEventListener('click', async () => {
+      on(ui.startBtn, 'click', startGame);
+      on(ui.startDemoBtn, 'click', () => resetGame());
+      on(ui.resumeBtn, 'click', togglePause);
+      on(ui.pauseBtn, 'click', togglePause);
+      on(ui.restartBtn, 'click', () => resetGame());
+      on(ui.modalRestartBtn, 'click', () => resetGame());
+      on(ui.modeClassicBtn, 'click', () => setMode('classic'));
+      on(ui.modeSprintBtn, 'click', () => setMode('sprint'));
+      on(ui.modeUltraBtn, 'click', () => setMode('ultra'));
+      on(ui.modeZenBtn, 'click', () => setMode('zen'));
+      on(ui.newSeedBtn, 'click', () => { currentSeed = randomSeed(); updateSeedLabel(); resetGame({ showStart: true }); });
+      on(ui.copySeedBtn, 'click', async () => {
         try { await navigator.clipboard.writeText(currentSeed); ui.seedInfo.textContent = `Seed: ${currentSeed} (copied)`; }
         catch (_) { ui.seedInfo.textContent = `Seed: ${currentSeed}`; }
       });
-      ui.themeBtn.addEventListener('click', () => {
+      on(ui.themeBtn, 'click', () => {
         settings.theme = settings.theme === 'dark' ? 'light' : 'dark';
         applyTheme(settings.theme);
         persistSettings();
       });
-      ui.muteBtn.addEventListener('click', () => {
+      on(ui.muteBtn, 'click', () => {
         settings.muted = !settings.muted;
         persistSettings();
         updateSoundUI();
       });
-      ui.musicBtn.addEventListener('click', () => {
+      on(ui.musicBtn, 'click', () => {
         settings.musicEnabled = !settings.musicEnabled;
         persistSettings();
         updateSoundUI();
       });
-      ui.volumeSlider.addEventListener('input', () => {
+      on(ui.musicThemeBtn, 'click', () => {
+        const order = ['chill', 'arcade', 'dark'];
+        const index = order.indexOf(settings.musicTheme);
+        settings.musicTheme = order[(index + 1) % order.length];
+        persistSettings();
+        musicIndex = 0;
+        nextMusicAt = 0;
+        updateSoundUI();
+      });
+      on(ui.volumeSlider, 'input', () => {
         settings.volume = Number(ui.volumeSlider.value) / 100;
         persistSettings();
       });
@@ -1430,12 +1520,18 @@
     }
     function setMode(modeId) {
       activeMode = MODES[modeId] || MODES.classic;
-      if (!started) {
-        dropInterval = activeMode.baseInterval;
-      }
-      updateModeButtons();
-      updateUI();
+      if (!started) dropInterval = activeMode.baseInterval;
+      safeCall(updateModeButtons);
+      safeCall(updateUI);
+      if (ui.seedInfo) ui.seedInfo.textContent = `Seed: ${currentSeed} • mode: ${activeMode.title}`;
     }
+    window.selectMode = (modeId) => {
+      try {
+        setMode(modeId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     function updateModeButtons() {
       const list = [
         [ui.modeClassicBtn, 'classic'],
@@ -1450,6 +1546,7 @@
     }
     function updateSeedLabel() { ui.seedInfo.textContent = `Seed: ${currentSeed}`; }
     function renderKeymap() {
+      if (!ui.keymapList) return;
       const labels = {
         left: 'Влево', right: 'Вправо', down: 'Вниз',
         rotateCW: 'Поворот CW', rotateCCW: 'Поворот CCW',
@@ -1559,9 +1656,47 @@
     function updateSoundUI() {
       if (ui.muteBtn) ui.muteBtn.textContent = settings.muted ? 'Off' : 'On';
       if (ui.musicBtn) ui.musicBtn.textContent = settings.musicEnabled ? 'On' : 'Off';
+      if (ui.musicThemeBtn) {
+        const labels = { chill: 'Chill', arcade: 'Arcade', dark: 'Dark' };
+        ui.musicThemeBtn.textContent = labels[settings.musicTheme] || 'Chill';
+      }
     }
     let audioCtx = null;
-    const MUSIC_PATTERN = [220, 247, 262, 294, 262, 247, 220, 196];
+    const MUSIC_THEMES = {
+      chill: {
+        pattern: [220, 247, 262, 294, 262, 247, 220, 196],
+        stepSec: 0.33,
+        leadWave: 'triangle',
+        layerWave: 'sine',
+        leadGain: 0.085,
+        layerGain: 0.045,
+        leadDuration: 0.24,
+        layerDuration: 0.2,
+        layerOctave: 2,
+      },
+      arcade: {
+        pattern: [262, 330, 392, 523, 392, 330, 294, 349],
+        stepSec: 0.25,
+        leadWave: 'square',
+        layerWave: 'triangle',
+        leadGain: 0.1,
+        layerGain: 0.055,
+        leadDuration: 0.18,
+        layerDuration: 0.14,
+        layerOctave: 2,
+      },
+      dark: {
+        pattern: [164, 185, 196, 174, 164, 147, 138, 147],
+        stepSec: 0.38,
+        leadWave: 'sawtooth',
+        layerWave: 'triangle',
+        leadGain: 0.08,
+        layerGain: 0.04,
+        leadDuration: 0.3,
+        layerDuration: 0.24,
+        layerOctave: 0.5,
+      },
+    };
     let musicIndex = 0;
     let nextMusicAt = 0;
     function getAudioCtx() {
@@ -1608,22 +1743,23 @@
       const audio = getAudioCtx();
       if (!audio) return;
       if (audio.state === 'suspended') return;
+      const theme = MUSIC_THEMES[settings.musicTheme] || MUSIC_THEMES.chill;
       const now = audio.currentTime;
       if (!nextMusicAt || nextMusicAt < now) nextMusicAt = now + 0.02;
       while (nextMusicAt < now + 0.08) {
-        const base = MUSIC_PATTERN[musicIndex % MUSIC_PATTERN.length];
-        playMusicNote(base, nextMusicAt, 0.24, 0.09);
-        playMusicNote(base * 2, nextMusicAt, 0.18, 0.05);
+        const base = theme.pattern[musicIndex % theme.pattern.length];
+        playMusicNote(base, nextMusicAt, theme.leadDuration, theme.leadGain, theme.leadWave);
+        playMusicNote(base * theme.layerOctave, nextMusicAt, theme.layerDuration, theme.layerGain, theme.layerWave);
         musicIndex++;
-        nextMusicAt += 0.33;
+        nextMusicAt += theme.stepSec;
       }
     }
-    function playMusicNote(freq, when, duration, layerGain) {
+    function playMusicNote(freq, when, duration, layerGain, wave = 'triangle') {
       const audio = getAudioCtx();
       if (!audio) return;
       const osc = audio.createOscillator();
       const gain = audio.createGain();
-      osc.type = 'triangle';
+      osc.type = wave;
       osc.frequency.setValueAtTime(freq, when);
       gain.gain.setValueAtTime(settings.volume * layerGain, when);
       gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
